@@ -13,7 +13,7 @@ public:
 	bool IsVisited = false;
 	double TotalDistance = std::numeric_limits<double>::max();
 	Vertex<T>* Founder = nullptr;
-	std::map<Vertex<T>, double>* Edges;
+	std::map<Vertex<T>*, double>* Edges;
 
 	Vertex(T value)
 	{
