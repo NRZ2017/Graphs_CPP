@@ -126,6 +126,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Edges.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="Vertex.h" />

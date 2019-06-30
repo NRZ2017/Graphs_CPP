@@ -40,9 +40,10 @@ void Graph<T>::RemoveVertex(Vertex<T> vertex)
 	for (int i = 0; i < Vertices.size(); i++)
 	{
 		auto vert = Vertices.at(i);
+		vert.Neighbors.erase(vertex);
 
-
-		vert.Edges->erase(&vertex);
+		//vert.Edges->erase(&vertex);
+		
 	}
 }
 
@@ -95,17 +96,19 @@ bool Graph<T>::ContainsLoop(Vertex<T>* start)
 {
 	//Depth First Search
 	std::stack<Vertex<T>*> stack;// = std::stack<Vertex<T>*>();
-	std::unordered_set<Vertex<T>*> visited;// = std::unordered_set<Vertex<T>*>();
+	std::vector<Vertex<T>*> visited;// = std::unordered_set<Vertex<T>*>();
 
 	stack.push(&Vertices.at(0));
 	while (stack.size() != 0)
 	{
+		int index = 0;
+		Vertex<T>* temp;
 		Vertex<T>* curr = stack.top();
 		stack.pop();
-		visited.insert(curr);
+		visited[index++] = curr;
 		for (int i = 0; i < curr->Edges->size(); i++)
 		{
-			auto neighbor = curr->Edges->at(i);
+			
 		}
 	}
 

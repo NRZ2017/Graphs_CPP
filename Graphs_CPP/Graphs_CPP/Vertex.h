@@ -2,6 +2,7 @@
 #include <limits>
 #include<string>
 #include <map>
+#include "Edges.h"
 
 template <typename T>
 class Vertex
@@ -13,12 +14,11 @@ public:
 	bool IsVisited = false;
 	double TotalDistance = std::numeric_limits<double>::max();
 	Vertex<T>* Founder = nullptr;
-	std::map<Vertex<T>*, double>* Edges;
+	std::vector<Edges<T>> Neighbors;
 
 	Vertex(T value)
 	{
 		this->Value = value;
-		Edges = new std::map<Vertex<T>, double>;
 	}
 
 	int CompareTo(Vertex<T> other);

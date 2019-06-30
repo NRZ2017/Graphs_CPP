@@ -20,6 +20,7 @@ public:
 	void HeapifyUp(int index);
 	void HeapifyDown(int index);
 	T Pop();
+	bool Contains(T value);
 	Heap()
 	{
 		size = 10;
@@ -143,3 +144,15 @@ void Heap<T>::Swap(int i, int k)
 	HTree[k] = temp;
 }
 
+template <typename T>
+bool Heap<T>::Contains(T value)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (value = HTree[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
