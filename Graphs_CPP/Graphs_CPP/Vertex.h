@@ -14,7 +14,7 @@ public:
 	bool IsVisited = false;
 	double TotalDistance = std::numeric_limits<double>::max();
 	Vertex<T>* Founder = nullptr;
-	std::vector<Edges<T>> Neighbors;
+	std::vector<Edges<T>*> Neighbors;
 
 	Vertex(T value)
 	{
