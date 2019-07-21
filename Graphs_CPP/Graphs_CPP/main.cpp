@@ -11,5 +11,5 @@ int main()
 	graph.AddEdge("A", "B", 1);
 	graph.AddEdge("B", "C", 2);
 	graph.AddEdge("C", "D", 3);
-	graph.AddEdge("D", "A", 2);
+	graph.AddEdge("D", "A", 4);
 };

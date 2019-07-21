@@ -30,7 +30,6 @@ public:
 	Vertex<T>* GetVertex(T value);
 	Edges<T>* GetEdge(T a, T b);
 	Edges<T>* GetEdge(Vertex<T>* a, Vertex<T>* b);
-	void DepthFirstSearch(Vertex<T>* start, Vertex<T>* end);
 };
 
 template <typename T>
@@ -159,8 +158,3 @@ Edges<T>* Graph<T>::GetEdge(Vertex<T>* a, Vertex<T>* b)
 	return nullptr;
 }
 
-template <typename T>
-void Graph<T>::DepthFirstSearch(Vertex<T>* start, Vertex<T>* end)
-{
-
-}
