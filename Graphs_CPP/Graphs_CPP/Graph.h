@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include <unordered_set>
+#include <limits>
 #include"Vertex.h"
 #include "Edges.h"
 #include "PriorityQueue.h"
@@ -30,7 +31,8 @@ public:
 	Vertex<T>* GetVertex(T value);
 	Edges<T>* GetEdge(T a, T b);
 	Edges<T>* GetEdge(Vertex<T>* a, Vertex<T>* b);
-	void DepthFirstSearch(Vertex<T>* start, Vertex<T>* end);
+	std::vector<Vertex<T>*> DepthFirstSearch(Vertex<T>* start, Vertex<T>* end);
+	std::vector<Vertex<T>*> DepthFirstSearch(T start, T end);
 };
 
 template <typename T>
@@ -72,9 +74,9 @@ bool Graph<T>::RemoveVertex(Vertex<T>* vertex)
 	for (int i = 0; i < Vertices.size; i++)
 	{
 		auto item = Vertices.at(i);
-		for (int j = 0; j < item.Neighbors.size; j++)
+		for (int j = 0; j < item->Neighbors.size(); j++)
 		{
-			if (item.Neighbors.at(i)->EndingPoint == vertex)
+			if (item->Neighbors.at(i)->EndingPoint == vertex)
 			{
 				RemoveEdge(item, vertex);
 			}
@@ -93,7 +95,16 @@ bool Graph<T>::RemoveEdge(Vertex<T>* a, Vertex<T>* b)
 		return false;
 	}
 
-	a->Neighbors.erase(edge);
+	int count;
+	for (count = 0; count < a->Neighbors.size(); count++)
+	{
+		if (a->Neighbors.at(count) == edge)
+		{
+			break;
+		}
+	}
+
+	a->Neighbors.erase(a->Neighbors.begin() + count);
 	return true;
 }
 	 
@@ -129,7 +140,7 @@ Vertex<T>* Graph<T>::GetVertex(T value)
 		auto vert = Vertices.at(i);
 		if (vert->Value == value)
 		{
-			return &vert;
+			return vert;
 		}
 	}
 	return nullptr;
@@ -160,7 +171,55 @@ Edges<T>* Graph<T>::GetEdge(Vertex<T>* a, Vertex<T>* b)
 }
 
 template <typename T>
-void Graph<T>::DepthFirstSearch(Vertex<T>* start, Vertex<T>* end)
+std::vector<Vertex<T>*> Graph<T>::DepthFirstSearch(T start, T end)
 {
+	return DepthFirstSearch(Search(start), Search(end));
+}
 
+template <typename T>
+ std::vector<Vertex<T>*> Graph<T>::DepthFirstSearch(Vertex<T>* start, Vertex<T>* end)
+{
+	for (int i = 0; i < Vertices.size(); i++)
+	{
+		Vertices.at(i)->IsVisited = false;
+		Vertices.at(i)->TotalDistance = std::numeric_limits<double>::infinity();
+		Vertices.at(i)->Founder = nullptr;
+	}
+
+	start->TotalDistance = 0;
+	Heap<Vertex<T>*> Queue;
+	Queue.Insert(start);
+
+	while (Queue.Count != 0)
+	{
+		auto current = Queue.Pop();
+		current->IsVisited = true;
+		
+		for (int i = 0; i < current->Neighbors.size(); i++)
+		{
+			auto edge = current->Neighbors.at(i);
+			int tent = current->TotalDistance + edge->Distance;
+			if (tent <= edge->Distance)
+			{
+				edge->EndingPoint->TotalDistance = tent;
+				edge->EndingPoint->IsVisited = false;
+				edge->EndingPoint->Founder = current;
+			}
+
+			if (!edge->EndingPoint->IsVisited && !Queue.Contains(edge->EndingPoint))
+			{
+				Queue.Insert(edge->EndingPoint);
+			}
+
+			std::vector<Vertex<T>*> path;
+			auto curr = start;
+			while (curr != nullptr)
+			{
+				path.push_back(curr);
+				curr = curr->Founder;
+			}
+			
+			return path;
+		}
+	}
 }
